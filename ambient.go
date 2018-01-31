@@ -38,8 +38,8 @@ type DeviceInfo struct {
 }
 
 type DeviceRecord struct {
-	Macaddr    string
-	DeviceInfo DeviceInfo
+	Macaddress string
+	Info       DeviceInfo
 	LastData   AmbientRecord
 }
 
