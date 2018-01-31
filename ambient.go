@@ -44,7 +44,7 @@ type DeviceRecord struct {
 }
 
 type ApiDeviceMacResponse struct {
-	Ar               []AmbientRecord
+	AmbientRecord    []AmbientRecord
 	JSONResponse     string
 	HTTPResponseCode int
 }
