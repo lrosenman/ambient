@@ -1,4 +1,10 @@
+// SPDX-License-Identifier: BSD-2-Clause
+//
+// Copyright 2018 Larry Rosenman, LERCTR Consulting, larryrtx@gmail.com
+//
+
 // Ambient Weather API stuff
+
 package ambient
 
 import (
