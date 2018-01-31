@@ -5,6 +5,9 @@ import (
 	"time"
 )
 
+const ApiVer = "v1"
+const ApiEP = "https://api.ambientweather.net/" + ApiVer
+
 type AmbientRecord struct {
 	Date           time.Time
 	Baromabsin     float64
@@ -29,5 +32,25 @@ type AmbientRecord struct {
 	Yearlyrainin   float64
 }
 
-const ApiVer = "v1"
-const ApiEP = "https://api.ambientweather.net/" + ApiVer
+type DeviceInfo struct {
+	Name     string
+	Location string
+}
+
+type DeviceRecord struct {
+	Macaddr    string
+	DeviceInfo DeviceInfo
+	LastData   AmbientRecord
+}
+
+type ApiDeviceMacResponse struct {
+	Ar               []AmbientRecord
+	JSONResponse     string
+	HTTPResponseCode int
+}
+
+type ApiDeviceResponse struct {
+	DeviceRecord     []DeviceRecord
+	JSONResponse     string
+	HTTPResponseCode int
+}
