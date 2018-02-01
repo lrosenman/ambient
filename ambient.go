@@ -10,10 +10,12 @@ package ambient
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 )
 
@@ -109,7 +111,7 @@ func (Key Key) SetApiKey(apiKey string) {
 }
 
 // Issue a /devices call
-func Device(key Key) ApiDeviceResponse {
+func Device(key Key) (ApiDeviceResponse, error) {
 	var ar ApiDeviceResponse
 
 	url := ApiEP + "/devices?applicationKey=" + key.applicationKey +
@@ -118,34 +120,36 @@ func Device(key Key) ApiDeviceResponse {
 	resp, err := http.Get(url)
 	ar.ResponseTime = time.Since(startTime)
 	if err != nil {
-		panic(err)
+		return ar, err
 	}
 	ar.HTTPResponseCode = resp.StatusCode
 	switch resp.StatusCode {
 	case 200:
 	case 503, 429:
 		{
-			return ar
+			return ar, nil
 		}
 	default:
 		{
-			panic(resp)
+			fmt.Fprintf(os.Stderr, "ambient.Device: HTTPResponseCode=%d\nFull Response:\n%+v",
+				resp.StatusCode, resp)
+			return ar, errors.New("Bad non-200/429/503 Response Code")
 		}
 	}
 	ar.JSONResponse, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
-		panic(err)
+		return ar, err
 	}
 	err = json.Unmarshal(ar.JSONResponse, &ar.DeviceRecord)
 	if err != nil {
-		panic(err)
+		return ar, err
 	}
-	return ar
+	return ar, nil
 
 }
 
 // issue a /devices/macaddr call.
-func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) ApiDeviceMacResponse {
+func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (ApiDeviceMacResponse, error) {
 	var ar ApiDeviceMacResponse
 	url := ApiEP + "/devices/" + macaddr + "?endDate=" + url.QueryEscape(endtime.Format(time.RFC3339)) +
 		"&limit=" + fmt.Sprintf("%d", limit) + "&applicationKey=" + key.applicationKey +
@@ -154,27 +158,29 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) ApiDevic
 	resp, err := http.Get(url)
 	ar.ResponseTime = time.Since(startTime)
 	if err != nil {
-		panic(err)
+		return ar, err
 	}
 	ar.HTTPResponseCode = resp.StatusCode
 	switch resp.StatusCode {
 	case 200:
 	case 503, 429:
 		{
-			return ar
+			return ar, nil
 		}
 	default:
 		{
-			panic(resp)
+			fmt.Fprintf(os.Stderr, "ambient.Device: HTTPResponseCode=%d\nFull Response:\n%+v",
+				resp.StatusCode, resp)
+			return ar, errors.New("Bad non-200/429/503 Response Code")
 		}
 	}
 	ar.JSONResponse, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
-		panic(err)
+		return ar, err
 	}
 	err = json.Unmarshal(ar.JSONResponse, &ar.AmbientRecord)
 	if err != nil {
-		panic(err)
+		return ar, err
 	}
-	return ar
+	return ar, nil
 }
