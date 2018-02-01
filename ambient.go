@@ -25,9 +25,9 @@ const APIVer = "v1"
 // APIEP is the endpoint to be called.
 const APIEP = "https://api.ambientweather.net/" + APIVer
 
-// AmbientRecord maps the data for a specific time
+// Record maps the data for a specific time
 // as returned by the API.
-type AmbientRecord struct {
+type Record struct {
 	Date           time.Time
 	Baromabsin     float64
 	Baromrelin     float64
@@ -61,13 +61,13 @@ type DeviceInfo struct {
 type DeviceRecord struct {
 	Macaddress string
 	Info       DeviceInfo
-	LastData   AmbientRecord
+	LastData   Record
 }
 
 // APIDeviceMacResponse returns the data from
 // /devices/macaddr API.
 type APIDeviceMacResponse struct {
-	AmbientRecord    []AmbientRecord
+	Record           []Record
 	JSONResponse     []byte
 	HTTPResponseCode int
 	ResponseTime     time.Duration
@@ -183,7 +183,7 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 	if err != nil {
 		return ar, err
 	}
-	err = json.Unmarshal(ar.JSONResponse, &ar.AmbientRecord)
+	err = json.Unmarshal(ar.JSONResponse, &ar.Record)
 	if err != nil {
 		return ar, err
 	}

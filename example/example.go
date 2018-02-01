@@ -28,13 +28,13 @@ func main() {
 		fmt.Printf("MacAddress[%d]=%s\n", i, macRec.Macaddress)
 		// API Rate Limit (1/second)
 		time.Sleep(1 * time.Second)
-		// Get the latest ambient.AmbientRecord and print Date and Tempf
+		// Get the latest ambient.Record and print Date and Tempf
 		ar, err := ambient.DeviceMac(key, macRec.Macaddress, time.Now(), 1)
 		if err != nil {
 			panic(err)
 		}
 		if ar.HTTPResponseCode == 200 {
-			fmt.Printf("Date=%v, Tempf=%f\n", ar.AmbientRecord[0].Date, ar.AmbientRecord[0].Tempf)
+			fmt.Printf("Date=%v, Tempf=%f\n", ar.Record[0].Date, ar.Record[0].Tempf)
 		} else {
 			fmt.Printf("Bad HTTPResponseCode=%d\n", ar.HTTPResponseCode)
 		}
