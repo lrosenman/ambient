@@ -1,5 +1,6 @@
 # ambient
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
+[![GoDoc](https://godoc.org/github.com/lrosenman/ambient?status.svg)](https://godoc.org/github.com/lrosenman/ambient)
 
 AmbientWeather.net API Helper
 
