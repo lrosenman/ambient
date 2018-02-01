@@ -88,7 +88,7 @@ type Key struct {
 	apiKey         string
 }
 
-// NewKwy returns Key stucture to be used.
+// NewKey returns Key stucture to be used.
 func NewKey(applicationKey string, apiKey string) Key {
 	return Key{applicationKey: applicationKey, apiKey: apiKey}
 }
