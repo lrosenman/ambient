@@ -20,9 +20,9 @@ const ApiEP = "https://api.ambientweather.net/" + ApiVer
 const ApiVer = "v1"
 type AmbientRecord struct{ ... }
 type ApiDeviceMacResponse struct{ ... }
-    func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) ApiDeviceMacResponse
+    func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (ApiDeviceMacResponse, error)
 type ApiDeviceResponse struct{ ... }
-    func Device(key Key) ApiDeviceResponse
+    func Device(key Key) (ApiDeviceResponse, error)
 type DeviceInfo struct{ ... }
 type DeviceRecord struct{ ... }
 type Key struct{ ... }
