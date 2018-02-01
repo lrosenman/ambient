@@ -169,7 +169,9 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (ApiDevi
 		}
 	default:
 		{
-			fmt.Fprintf(os.Stderr, "ambient.Device: HTTPResponseCode=%d\nFull Response:\n%+v",
+			fmt.Fprintf(os.Stderr,
+				"ambient.DeviceMac: HTTPResponseCode=%d\n"+
+					"Full Response:\n%+v",
 				resp.StatusCode, resp)
 			return ar, errors.New("Bad non-200/429/503 Response Code")
 		}
