@@ -8,6 +8,7 @@ Official Doc:
 
 https://ambientweather.docs.apiary.io/
 
+```Go
 package ambient // import "github.com/lrosenman/ambient"
 
 Package ambient provides helper functions and Go types for accessing
@@ -26,3 +27,4 @@ type DeviceInfo struct{ ... }
 type DeviceRecord struct{ ... }
 type Key struct{ ... }
     func NewKey(applicationKey string, apiKey string) Key
+```
