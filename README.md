@@ -8,7 +8,7 @@ Official Doc:
 
 https://ambientweather.docs.apiary.io/
 
-```Go
+```
 package ambient // import "github.com/lrosenman/ambient"
 
 Package ambient provides helper functions and Go types for accessing
