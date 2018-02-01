@@ -9,6 +9,7 @@ package main
 import (
 	"fmt"
 	"github.com/lrosenman/ambient"
+	"os"
 	"time"
 )
 
@@ -23,6 +24,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	// If we don't get a 200, may as well die.
+	if dr.HTTPResponseCode != 200 {
+		fmt.Printf("Bad HTTPResponseCode=%d\n", dr.HTTPResponseCode)
+		os.Exit(1)
+	}
+
 	// walk the list of Mac Addresses, and print the latest temperature
 	for i, macRec := range dr.DeviceRecord {
 		fmt.Printf("MacAddress[%d]=%s\n", i, macRec.Macaddress)
