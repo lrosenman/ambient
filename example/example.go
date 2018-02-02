@@ -33,6 +33,8 @@ func main() {
 	// walk the list of Mac Addresses, and print the latest temperature
 	for i, macRec := range dr.DeviceRecord {
 		fmt.Printf("MacAddress[%d]=%s\n", i, macRec.Macaddress)
+		fmt.Printf("LatestData:\n\tDate=%s, Tempf=%f\n", macRec.LastData.Date,
+			macRec.LastData.Tempf)
 		// API Rate Limit (1/second)
 		time.Sleep(1 * time.Second)
 		// Get the latest ambient.Record and print Date and Tempf
