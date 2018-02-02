@@ -50,6 +50,7 @@ type Record struct {
 	Weeklyrainin      float64
 	Winddir           int
 	Windgustmph       float64
+	Windgustdir       int
 	Windspeedmph      float64
 	Winddir_avg2m     int
 	Windspdmph_avg2m  float64
