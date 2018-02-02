@@ -28,27 +28,31 @@ const APIEP = "https://api.ambientweather.net/" + APIVer
 // Record maps the data for a specific time
 // as returned by the API.
 type Record struct {
-	Date           time.Time
-	Baromabsin     float64
-	Baromrelin     float64
-	Dailyrainin    float64
-	Dewpoint       float64
-	Feelslike      float64
-	Hourlyrainin   float64
-	Humidity       int
-	Humidityin     int
-	LastRain       time.Time
-	Maxdailygust   float64
-	Monthlyrainin  float64
-	Solarradiation float64
-	Tempf          float64
-	Tempinf        float64
-	Uv             int
-	Weeklyrainin   float64
-	Winddir        int
-	Windgustmph    float64
-	Windspeedmph   float64
-	Yearlyrainin   float64
+	Date              time.Time
+	Baromabsin        float64
+	Baromrelin        float64
+	Dailyrainin       float64
+	Dewpoint          float64
+	Feelslike         float64
+	Hourlyrainin      float64
+	Humidity          int
+	Humidityin        int
+	LastRain          time.Time
+	Maxdailygust      float64
+	Monthlyrainin     float64
+	Solarradiation    float64
+	Tempf             float64
+	Tempinf           float64
+	Uv                int
+	Weeklyrainin      float64
+	Winddir           int
+	Windgustmph       float64
+	Windspeedmph      float64
+	Winddir_avg2m     int
+	Windspdmph_avg2m  float64
+	Winddir_avg10m    int
+	Windspdmph_avg10m float64
+	Yearlyrainin      float64
 }
 
 // DeviceInfo maps the info portion of the /devices API.
