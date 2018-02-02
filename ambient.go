@@ -37,6 +37,9 @@ type Record struct {
 	Hourlyrainin      float64
 	Humidity          int
 	Humidityin        int
+	// Note: LastRain only comes in with
+	// the Device API call, not the DeviceMac 
+	// API
 	LastRain          time.Time
 	Maxdailygust      float64
 	Monthlyrainin     float64
