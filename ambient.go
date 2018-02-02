@@ -28,17 +28,17 @@ const APIEP = "https://api.ambientweather.net/" + APIVer
 // Record maps the data for a specific time
 // as returned by the API.
 type Record struct {
-	Date              time.Time
-	Baromabsin        float64
-	Baromrelin        float64
-	Dailyrainin       float64
-	Dewpoint          float64
-	Feelslike         float64
-	Hourlyrainin      float64
-	Humidity          int
-	Humidityin        int
+	Date         time.Time
+	Baromabsin   float64
+	Baromrelin   float64
+	Dailyrainin  float64
+	Dewpoint     float64
+	Feelslike    float64
+	Hourlyrainin float64
+	Humidity     int
+	Humidityin   int
 	// Note: LastRain only comes in with
-	// the Device API call, not the DeviceMac 
+	// the Device API call, not the DeviceMac
 	// API
 	LastRain          time.Time
 	Maxdailygust      float64
