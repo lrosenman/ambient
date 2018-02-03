@@ -74,9 +74,10 @@ type Record struct {
 	Temp9f         float64
 	Temp10f        float64
 	Tempinf        float64
-	// BUG(lrosenman): should be float64
+	// BUG(lrosenman): Totalrainin should be float64
 	Totalrainin string
-	// BUG(lrosenman): the test device is reporting a float
+	// BUG(lrosenman): Uv should be an int
+	// but the test device is reporting a float
 	// but per https://www.epa.gov/sunsafety/calculating-uv-index-0
 	// it should be an integer
 	Uv                float64
