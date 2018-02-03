@@ -31,6 +31,17 @@ type Record struct {
 	Date           time.Time
 	Baromabsin     float64
 	Baromrelin     float64
+	Battout        string
+	Batt1          string
+	Batt2          string
+	Batt3          string
+	Batt4          string
+	Batt5          string
+	Batt6          string
+	Batt7          string
+	Batt8          string
+	Batt9          string
+	Batt10         string
 	Co2            float64
 	Dailyrainin    float64
 	Dewpoint       float64
@@ -64,6 +75,7 @@ type Record struct {
 	Monthlyrainin  float64
 	Solarradiation float64
 	Tempf          float64
+	Temp1f         float64
 	Temp2f         float64
 	Temp3f         float64
 	Temp4f         float64
