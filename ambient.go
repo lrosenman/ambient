@@ -79,6 +79,7 @@ type Record struct {
 	// BUG(lrosenman): Uv should be an int
 	// but the test device is reporting a float
 	// but per https://www.epa.gov/sunsafety/calculating-uv-index-0
+	// it should be an int.
 	// all consoles EXCEPT the WS-8478 return int, but we have to 
 	// accommodate the WS-8478.
 	Uv                float64
