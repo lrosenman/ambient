@@ -50,47 +50,55 @@ func main() {
 			panic(dr)
 		}
 	}
-	// API RateLimit
-	time.Sleep(1 * time.Second)
-	ar, err := ambient.DeviceMac(key, dr.DeviceRecord[0].Macaddress, time.Now(), 1)
-	if err != nil {
-		panic(err)
-	}
-	switch ar.HTTPResponseCode {
-	case 200:
-	case 429, 503:
-		{
-			fmt.Printf("Error code %d, retrying.\n", ar.HTTPResponseCode)
-			time.Sleep(1 * time.Second)
-			ar, err = ambient.DeviceMac(key, dr.DeviceRecord[0].Macaddress, time.Now(), 1)
-			if err != nil {
-				panic(err)
-			}
-			switch ar.HTTPResponseCode {
-			case 200:
-			default:
-				{
-					panic(ar)
+	ar := make([]ambient.APIDeviceMacResponse, len(dr.DeviceRecord))
+	for z, _ := range dr.DeviceRecord {
+		// API RateLimit
+		time.Sleep(1 * time.Second)
+		ar2, err := ambient.DeviceMac(key, dr.DeviceRecord[z].Macaddress, time.Now(), 1)
+		if err != nil {
+			panic(err)
+		}
+		ar[z] = ar2
+		switch ar[z].HTTPResponseCode {
+		case 200:
+		case 429, 503:
+			{
+				fmt.Printf("Error code %d, retrying.\n", ar[z].HTTPResponseCode)
+				time.Sleep(1 * time.Second)
+				ar2, err = ambient.DeviceMac(key, dr.DeviceRecord[z].Macaddress, time.Now(), 1)
+				if err != nil {
+					panic(err)
+				}
+				ar[z] = ar2
+				switch ar[z].HTTPResponseCode {
+				case 200:
+				default:
+					{
+						panic(ar)
+					}
 				}
 			}
-		}
-	default:
-		{
-			panic(ar)
+		default:
+			{
+				panic(ar)
+			}
 		}
 	}
-	var arPrettyJSON bytes.Buffer
 	var drPrettyJSON bytes.Buffer
 	json.Indent(&drPrettyJSON, dr.JSONResponse, "", "\t")
-	json.Indent(&arPrettyJSON, ar.JSONResponse, "", "\t")
-	arRecordJSON, _ := json.MarshalIndent(ar.Record, "", "\t")
-	arRecordFieldsJSON, _ := json.MarshalIndent(ar.RecordFields, "", "\t")
 	drDeviceRecordJSON, _ := json.MarshalIndent(dr.DeviceRecord, "", "\t")
 	fmt.Printf("DeviceResponse:\nHTTPResponseCode: %d, ResponseTime: %v\n", dr.HTTPResponseCode, dr.ResponseTime)
 	fmt.Printf("Device Record:\n%+v\n", string(drDeviceRecordJSON))
 	fmt.Printf("JSONResponse:\n%s\n\n", string(drPrettyJSON.Bytes()))
-	fmt.Printf("DeviceMacResponse:\nHTTPResponseCode: %d, ResponseTime: %v\n", ar.HTTPResponseCode, ar.ResponseTime)
-	fmt.Printf("Record:\n%+v\n", string(arRecordJSON))
-	fmt.Printf("RecordFields:\n%+v\n", string(arRecordFieldsJSON))
-	fmt.Printf("JSONResponse:\n%s\n\n", string(arPrettyJSON.Bytes()))
+	for idx, _ := range ar {
+		var arPrettyJSON bytes.Buffer
+		json.Indent(&arPrettyJSON, ar[idx].JSONResponse, "", "\t")
+		arRecordJSON, _ := json.MarshalIndent(ar[idx].Record, "", "\t")
+		arRecordFieldsJSON, _ := json.MarshalIndent(ar[idx].RecordFields, "", "\t")
+		fmt.Printf("DeviceMacResponse[%s(%s)]:\nHTTPResponseCode: %d, ResponseTime: %v\n", dr.DeviceRecord[idx].Info.Name,
+			dr.DeviceRecord[idx].Macaddress, ar[idx].HTTPResponseCode, ar[idx].ResponseTime)
+		fmt.Printf("Record:\n%+v\n", string(arRecordJSON))
+		fmt.Printf("RecordFields:\n%+v\n", string(arRecordFieldsJSON))
+		fmt.Printf("JSONResponse:\n%s\n\n", string(arPrettyJSON.Bytes()))
+	}
 }
