@@ -97,15 +97,17 @@ type DeviceInfo struct {
 
 //DeviceRecord maps one record of the /devices API.
 type DeviceRecord struct {
-	Macaddress string
-	Info       DeviceInfo
-	LastData   Record
+	Macaddress     string
+	Info           DeviceInfo
+	LastData       Record
+	LastDataFields []string // Not populated yet.
 }
 
 // APIDeviceMacResponse returns the data from
 // /devices/macaddr API.
 type APIDeviceMacResponse struct {
 	Record           []Record
+	RecordFields     []string // Not populated yet
 	JSONResponse     []byte
 	HTTPResponseCode int
 	ResponseTime     time.Duration
@@ -185,6 +187,23 @@ func Device(key Key) (APIDeviceResponse, error) {
 	if err != nil {
 		return ar, err
 	}
+	/*   Trying to figure out how to map the keys in each lastData element
+	var result  map[string]interface{}
+	i := 0
+	err = json.Unmarshal([]byte(ar.JSONResponse), &result)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v",err)
+	fmt.Printf("%+v\n",result)
+	LastData := result["lastData"].(map[string]interface{})
+	fmt.Printf("%+v\n",LastData)
+	for _, value := range LastData {
+	//	ar.DeviceRecord[0].LastDataFields[i] = value
+	fmt.Printf("%+v\n",value)
+		i++
+	}
+	*/
 	return ar, nil
 
 }
