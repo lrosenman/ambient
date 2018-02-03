@@ -84,11 +84,13 @@ func main() {
 	json.Indent(&drPrettyJSON, dr.JSONResponse, "", "\t")
 	json.Indent(&arPrettyJSON, ar.JSONResponse, "", "\t")
 	arRecordJSON, _ := json.MarshalIndent(ar.Record, "", "\t")
+	arRecordFieldsJSON, _ := json.MarshalIndent(ar.RecordFields, "", "\t")
 	drDeviceRecordJSON, _ := json.MarshalIndent(dr.DeviceRecord, "", "\t")
 	fmt.Printf("DeviceResponse:\nHTTPResponseCode: %d, ResponseTime: %v\n", dr.HTTPResponseCode, dr.ResponseTime)
 	fmt.Printf("Device Record:\n%+v\n", string(drDeviceRecordJSON))
 	fmt.Printf("JSONResponse:\n%s\n\n", string(drPrettyJSON.Bytes()))
 	fmt.Printf("DeviceMacResponse:\nHTTPResponseCode: %d, ResponseTime: %v\n", ar.HTTPResponseCode, ar.ResponseTime)
 	fmt.Printf("Record:\n%+v\n", string(arRecordJSON))
+	fmt.Printf("RecordFields:\n%+v\n", string(arRecordFieldsJSON))
 	fmt.Printf("JSONResponse:\n%s\n\n", string(arPrettyJSON.Bytes()))
 }

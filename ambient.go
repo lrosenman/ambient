@@ -75,8 +75,11 @@ type Record struct {
 	Temp10f        float64
 	Tempinf        float64
 	// BUG(lrosenman): should be float64
-	Totalrainin       string
-	Uv                int
+	Totalrainin string
+	// BUG(lrosenman): the test device is reporting a float
+	// but per https://www.epa.gov/sunsafety/calculating-uv-index-0
+	// it should be an integer
+	Uv                float64
 	Weeklyrainin      float64
 	Winddir           int
 	Windgustmph       float64
@@ -100,14 +103,14 @@ type DeviceRecord struct {
 	Macaddress     string
 	Info           DeviceInfo
 	LastData       Record
-	LastDataFields []string // Not populated yet.
+	LastDataFields map[string]interface{}
 }
 
 // APIDeviceMacResponse returns the data from
 // /devices/macaddr API.
 type APIDeviceMacResponse struct {
 	Record           []Record
-	RecordFields     []string // Not populated yet
+	RecordFields     []map[string]interface{}
 	JSONResponse     []byte
 	HTTPResponseCode int
 	ResponseTime     time.Duration
@@ -187,25 +190,30 @@ func Device(key Key) (APIDeviceResponse, error) {
 	if err != nil {
 		return ar, err
 	}
-	/*   Trying to figure out how to map the keys in each lastData element
-	var result  map[string]interface{}
-	i := 0
-	err = json.Unmarshal([]byte(ar.JSONResponse), &result)
+	var DeviceInterface interface{}
+	err = json.Unmarshal(ar.JSONResponse, &DeviceInterface)
 	if err != nil {
-		panic(err)
+		return ar, err
 	}
-	fmt.Printf("%+v",err)
-	fmt.Printf("%+v\n",result)
-	LastData := result["lastData"].(map[string]interface{})
-	fmt.Printf("%+v\n",LastData)
-	for _, value := range LastData {
-	//	ar.DeviceRecord[0].LastDataFields[i] = value
-	fmt.Printf("%+v\n",value)
-		i++
+	DeviceMap := DeviceInterface.([]interface{})
+	for key, value := range DeviceMap {
+		switch value2 := value.(type) {
+		case map[string]interface{}:
+			for k1, v1 := range value2 {
+				if k1 == "lastData" {
+					switch newkey := v1.(type) {
+					case map[string]interface{}:
+						LDF := make(map[string]interface{})
+						for k2, v2 := range newkey {
+							LDF[k2] = v2
+						}
+						ar.DeviceRecord[key].LastDataFields = LDF
+					}
+				}
+			}
+		}
 	}
-	*/
 	return ar, nil
-
 }
 
 // DeviceMac issues a /devices/macaddr call.
@@ -244,5 +252,22 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 	if err != nil {
 		return ar, err
 	}
+	var DeviceInterface interface{}
+	err = json.Unmarshal(ar.JSONResponse, &DeviceInterface)
+	if err != nil {
+		return ar, err
+	}
+	DeviceMap := DeviceInterface.([]interface{})
+	RDF := make([]map[string]interface{}, len(DeviceMap))
+	for key, value := range DeviceMap {
+		RDF[key] = make(map[string]interface{})
+		switch value2 := value.(type) {
+		case map[string]interface{}:
+			for k2, v2 := range value2 {
+				RDF[key][k2] = v2
+			}
+		}
+	}
+	ar.RecordFields = RDF
 	return ar, nil
 }
