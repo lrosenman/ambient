@@ -86,10 +86,7 @@ type Record struct {
 	Temp9f         float64
 	Temp10f        float64
 	Tempinf        float64
-	// BUG(lrosenman): Totalrainin should be float64.
-	// As of 2018-02-03 it is being returned as a string from
-	// the API.
-	Totalrainin string
+	Totalrainin    float64
 	// BUG(lrosenman): Uv should be an int
 	// but the WS-8478 device is reporting a float.
 	// Per https://www.epa.gov/sunsafety/calculating-uv-index-0
