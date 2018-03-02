@@ -183,6 +183,10 @@ func Device(key Key) (APIDeviceResponse, error) {
 		return ar, err
 	}
 	ar.HTTPResponseCode = resp.StatusCode
+	ar.JSONResponse, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return ar, err
+	}
 	switch resp.StatusCode {
 	case 200:
 	case 503, 429:
@@ -195,14 +199,6 @@ func Device(key Key) (APIDeviceResponse, error) {
 				resp.StatusCode, resp)
 			return ar, errors.New("Bad non-200/429/503 Response Code")
 		}
-	}
-	ar.JSONResponse, err = ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return ar, err
-	}
-	err = json.Unmarshal(ar.JSONResponse, &ar.DeviceRecord)
-	if err != nil {
-		return ar, err
 	}
 	var DeviceInterface interface{}
 	err = json.Unmarshal(ar.JSONResponse, &DeviceInterface)
@@ -243,6 +239,10 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 		return ar, err
 	}
 	ar.HTTPResponseCode = resp.StatusCode
+	ar.JSONResponse, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return ar, err
+	}
 	switch resp.StatusCode {
 	case 200:
 	case 503, 429:
@@ -257,10 +257,6 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 				resp.StatusCode, resp)
 			return ar, errors.New("Bad non-200/429/503 Response Code")
 		}
-	}
-	ar.JSONResponse, err = ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return ar, err
 	}
 	err = json.Unmarshal(ar.JSONResponse, &ar.Record)
 	if err != nil {
