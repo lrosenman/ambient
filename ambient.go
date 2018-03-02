@@ -266,7 +266,6 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 	if err != nil {
 		return ar, err
 	}
-	fmt.Printf("ar.Record=%+v\n", ar.Record)
 	var DeviceInterface interface{}
 	err = json.Unmarshal(ar.JSONResponse, &DeviceInterface)
 	if err != nil {
