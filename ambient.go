@@ -200,13 +200,16 @@ func Device(key Key) (APIDeviceResponse, error) {
 			return ar, errors.New("Bad non-200/429/503 Response Code")
 		}
 	}
+	err = json.Unmarshal(ar.JSONResponse, &ar.DeviceRecord)
+	if err != nil {
+		return ar, err
+	}
 	var DeviceInterface interface{}
 	err = json.Unmarshal(ar.JSONResponse, &DeviceInterface)
 	if err != nil {
 		return ar, err
 	}
 	DeviceMap := DeviceInterface.([]interface{})
-	ar.DeviceRecord=make([]DeviceRecord,len(DeviceMap))
 	for key, value := range DeviceMap {
 		switch value2 := value.(type) {
 		case map[string]interface{}:
@@ -263,6 +266,7 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 	if err != nil {
 		return ar, err
 	}
+	fmt.Printf("ar.Record=%+v\n", ar.Record)
 	var DeviceInterface interface{}
 	err = json.Unmarshal(ar.JSONResponse, &DeviceInterface)
 	if err != nil {
