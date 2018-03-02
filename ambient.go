@@ -206,6 +206,7 @@ func Device(key Key) (APIDeviceResponse, error) {
 		return ar, err
 	}
 	DeviceMap := DeviceInterface.([]interface{})
+	ar.DeviceRecord=make([]DeviceRecord,len(DeviceMap))
 	for key, value := range DeviceMap {
 		switch value2 := value.(type) {
 		case map[string]interface{}:
