@@ -189,7 +189,7 @@ func Device(key Key) (APIDeviceResponse, error) {
 	}
 	switch resp.StatusCode {
 	case 200:
-	case 503, 429:
+	case 429, 502, 503:
 		{
 			return ar, nil
 		}
@@ -197,7 +197,7 @@ func Device(key Key) (APIDeviceResponse, error) {
 		{
 			fmt.Fprintf(os.Stderr, "ambient.Device: HTTPResponseCode=%d\nFull Response:\n%+v",
 				resp.StatusCode, resp)
-			return ar, errors.New("Bad non-200/429/503 Response Code")
+			return ar, errors.New("Bad non-200/429/502/503 Response Code")
 		}
 	}
 	err = json.Unmarshal(ar.JSONResponse, &ar.DeviceRecord)
@@ -249,7 +249,7 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 	}
 	switch resp.StatusCode {
 	case 200:
-	case 503, 429:
+	case 429, 502, 503:
 		{
 			return ar, nil
 		}
@@ -259,7 +259,7 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 				"ambient.DeviceMac: HTTPResponseCode=%d\n"+
 					"Full Response:\n%+v",
 				resp.StatusCode, resp)
-			return ar, errors.New("Bad non-200/429/503 Response Code")
+			return ar, errors.New("Bad non-200/429/502/503 Response Code")
 		}
 	}
 	err = json.Unmarshal(ar.JSONResponse, &ar.Record)
