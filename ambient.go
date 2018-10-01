@@ -192,8 +192,8 @@ func Device(key Key) (APIDeviceResponse, error) {
 	case 429, 502, 503:
 		{
 			if resp.StatusCode >= 500 {
-				if ar.JSONResponse == "" {
-					ar.JSONResponse = fmt.Sprintf("{errormessage: \"HTTP Error Code: %d\"}", resp.StatusCode)
+				if ar.JSONResponse == nil {
+					ar.JSONResponse, _ = json.Marshal(fmt.Sprintf("{errormessage: \"HTTP Error Code: %d\"}", resp.StatusCode))
 				}
 			}
 			return ar, nil
@@ -257,8 +257,10 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 	case 429, 502, 503:
 		{
 			if resp.StatusCode >= 500 {
-				if ar.JSONResponse == "" {
-					ar.JSONResponse = fmt.Sprintf("{errormessage: \"HTTP Error Code: %d\"}", resp.StatusCode)
+				if resp.StatusCode >= 500 {
+					if ar.JSONResponse == nil {
+						ar.JSONResponse, _ = json.Marshal(fmt.Sprintf("{errormessage: \"HTTP Error Code: %d\"}", resp.StatusCode))
+					}
 				}
 			}
 			return ar, nil
