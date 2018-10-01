@@ -29,7 +29,7 @@ func main() {
 	}
 	switch dr.HTTPResponseCode {
 	case 200:
-	case 429, 503:
+	case 429, 502, 503:
 		{
 			fmt.Printf("Error code %d, retrying.\n", dr.HTTPResponseCode)
 			time.Sleep(1 * time.Second)
@@ -61,7 +61,7 @@ func main() {
 		ar[z] = ar2
 		switch ar[z].HTTPResponseCode {
 		case 200:
-		case 429, 503:
+		case 429, 502, 503:
 			{
 				fmt.Printf("Error code %d, retrying.\n", ar[z].HTTPResponseCode)
 				time.Sleep(1 * time.Second)
