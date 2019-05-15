@@ -31,17 +31,17 @@ type Record struct {
 	Date           time.Time
 	Baromabsin     float64
 	Baromrelin     float64
-	Battout        string
-	Batt1          string
-	Batt2          string
-	Batt3          string
-	Batt4          string
-	Batt5          string
-	Batt6          string
-	Batt7          string
-	Batt8          string
-	Batt9          string
-	Batt10         string
+	Battout        json.Number
+	Batt1          json.Number
+	Batt2          json.Number
+	Batt3          json.Number
+	Batt4          json.Number
+	Batt5          json.Number
+	Batt6          json.Number
+	Batt7          json.Number
+	Batt8          json.Number
+	Batt9          json.Number
+	Batt10         json.Number
 	Co2            float64
 	Dailyrainin    float64
 	Dewpoint       float64
