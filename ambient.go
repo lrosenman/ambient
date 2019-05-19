@@ -104,6 +104,7 @@ type Record struct {
 	Winddir_avg10m    int
 	Windspdmph_avg10m float64
 	Yearlyrainin      float64
+	TZ                string
 }
 
 // DeviceInfo maps the info portion of the /devices API.
