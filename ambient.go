@@ -62,6 +62,8 @@ type Record struct {
 	Humidityin     int
 	LastRain       time.Time
 	Maxdailygust   float64
+	Pm25           int
+	Pm25_24h       float64
 	Relay1         int
 	Relay2         int
 	Relay3         int
