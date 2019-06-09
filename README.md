@@ -10,6 +10,9 @@ Official Doc:
 
 https://ambientweather.docs.apiary.io/
 
+Pull Requests, bug reports, code improvements, etc very much welcome.
+
+
 ```
 package ambient // import "github.com/lrosenman/ambient"
 
