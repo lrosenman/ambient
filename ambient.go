@@ -31,6 +31,7 @@ type Record struct {
 	Date           time.Time
 	Baromabsin     float64
 	Baromrelin     float64
+	Battin        json.Number
 	Battout        json.Number
 	Batt1          json.Number
 	Batt2          json.Number
@@ -42,11 +43,31 @@ type Record struct {
 	Batt8          json.Number
 	Batt9          json.Number
 	Batt10         json.Number
+	Batt_co2	json.Number
+	Batt_lightning	json.Number
 	Co2            float64
 	Dailyrainin    float64
 	Dewpoint       float64
+	Dewpoint1       float64
+	Dewpoint2       float64
+	Dewpoint3       float64
+	Dewpoint4       float64
+	Dewpoint5       float64
+	Dewpoint6       float64
+	Dewpoint7       float64
+	Dewpoint8       float64
+	Dewpointin       float64
 	Eventrainin    float64
 	Feelslike      float64
+	Feelslike1      float64
+	Feelslike2      float64
+	Feelslike3      float64
+	Feelslike4      float64
+	Feelslike5      float64
+	Feelslike6      float64
+	Feelslike7      float64
+	Feelslike8      float64
+	Feelslikein      float64
 	Hourlyrainin   float64
 	Humidity       int
 	Humidity1      int
@@ -62,6 +83,10 @@ type Record struct {
 	Humidityin     int
 	LastRain       time.Time
 	Maxdailygust   float64
+	Lightning_day	int
+	Lightning_distance float64
+	Lightning_hour	int
+	Lightning_time	int
 	Pm25           int
 	Pm25_24h       float64
 	Relay1         int
@@ -107,6 +132,7 @@ type Record struct {
 	Windspdmph_avg10m float64
 	Yearlyrainin      float64
 	TZ                string
+	
 }
 
 // DeviceInfo maps the info portion of the /devices API.
