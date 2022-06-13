@@ -56,6 +56,8 @@ type Record struct {
 	Dewpoint6          float64
 	Dewpoint7          float64
 	Dewpoint8          float64
+	Dewpoint9          float64
+	Dewpoint10         float64
 	Dewpointin         float64
 	Eventrainin        float64
 	Feelslike          float64
@@ -67,6 +69,8 @@ type Record struct {
 	Feelslike6         float64
 	Feelslike7         float64
 	Feelslike8         float64
+	Feelslike9         float64
+	Feelslike10        float64
 	Feelslikein        float64
 	Hourlyrainin       float64
 	Humidity           int
@@ -100,6 +104,26 @@ type Record struct {
 	Relay9             int
 	Relay10            int
 	Monthlyrainin      float64
+	soiltemp1f         float64
+	soiltemp2f         float64
+	soiltemp3f         float64
+	soiltemp4f         float64
+	soiltemp5f         float64
+	soiltemp6f         float64
+	soiltemp7f         float64
+	soiltemp8f         float64
+	soiltemp9f         float64
+	soiltemp10f        float64
+	soilhum1           float64
+	soilhum2           float64
+	soilhum3           float64
+	soilhum4           float64
+	soilhum5           float64
+	soilhum6           float64
+	soilhum7           float64
+	soilhum8           float64
+	soilhum9           float64
+	soilhum10          float64
 	Solarradiation     float64
 	Tempf              float64
 	Temp1f             float64
