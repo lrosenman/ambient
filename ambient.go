@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -28,6 +28,8 @@ const APIEP = "https://api.ambientweather.net/" + APIVer
 
 // Record maps the data for a specific time
 // as returned by the API.
+//
+//goland:noinspection GoSnakeCaseUsage
 type Record struct {
 	Date               time.Time
 	Baromabsin         float64
@@ -229,16 +231,16 @@ func (Key Key) SetAPIKey(apiKey string) {
 func Device(key Key) (APIDeviceResponse, error) {
 	var ar APIDeviceResponse
 
-	url := APIEP + "/devices?applicationKey=" + key.applicationKey +
+	apiurl := APIEP + "/devices?applicationKey=" + key.applicationKey +
 		"&apiKey=" + key.apiKey
 	startTime := time.Now()
-	resp, err := http.Get(url)
+	resp, err := http.Get(apiurl)
 	ar.ResponseTime = time.Since(startTime)
 	if err != nil {
 		return ar, err
 	}
 	ar.HTTPResponseCode = resp.StatusCode
-	ar.JSONResponse, err = ioutil.ReadAll(resp.Body)
+	ar.JSONResponse, err = io.ReadAll(resp.Body)
 	if err != nil {
 		return ar, err
 	}
@@ -247,15 +249,26 @@ func Device(key Key) (APIDeviceResponse, error) {
 	case 429, 502, 503:
 		{
 			if resp.StatusCode >= 500 {
-				ar.JSONResponse, _ = json.Marshal(fmt.Sprintf("{\"errormessage\": \"HTTP Error Code: %d\"}", resp.StatusCode))
+				ar.JSONResponse, _ = json.Marshal(
+					fmt.Sprintf(
+						"{\"errormessage\": \"HTTP Error Code: %d\"}", resp.StatusCode,
+					),
+				)
 			}
 			return ar, nil
 		}
 	default:
 		{
-			fmt.Fprintf(os.Stderr, "ambient.Device: HTTPResponseCode=%d\nFull Response:\n%+v",
-				resp.StatusCode, resp)
-			return ar, errors.New("Bad non-200/429/502/503 Response Code")
+			_, err := fmt.Fprintf(
+				os.Stderr, "ambient.Device: HTTPResponseCode=%d\nFull Response:\n%+v",
+				resp.StatusCode, resp,
+			)
+			if err != nil {
+				return APIDeviceResponse{}, err
+			}
+			return ar, errors.New(
+				"bad non-200/429/502/503 Response Code",
+			)
 		}
 	}
 	err = json.Unmarshal(ar.JSONResponse, &ar.DeviceRecord)
@@ -291,17 +304,17 @@ func Device(key Key) (APIDeviceResponse, error) {
 // DeviceMac issues a /devices/macaddr call.
 func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDeviceMacResponse, error) {
 	var ar APIDeviceMacResponse
-	url := APIEP + "/devices/" + macaddr + "?endDate=" + url.QueryEscape(endtime.Format(time.RFC3339)) +
+	apiurl := APIEP + "/devices/" + macaddr + "?endDate=" + url.QueryEscape(endtime.Format(time.RFC3339)) +
 		"&limit=" + fmt.Sprintf("%d", limit) + "&applicationKey=" + key.applicationKey +
 		"&apiKey=" + key.apiKey
 	startTime := time.Now()
-	resp, err := http.Get(url)
+	resp, err := http.Get(apiurl)
 	ar.ResponseTime = time.Since(startTime)
 	if err != nil {
 		return ar, err
 	}
 	ar.HTTPResponseCode = resp.StatusCode
-	ar.JSONResponse, err = ioutil.ReadAll(resp.Body)
+	ar.JSONResponse, err = io.ReadAll(resp.Body)
 	if err != nil {
 		return ar, err
 	}
@@ -311,18 +324,27 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 		{
 			if resp.StatusCode >= 500 {
 				if resp.StatusCode >= 500 {
-					ar.JSONResponse, _ = json.Marshal(fmt.Sprintf("{\"errormessage\": \"HTTP Error Code: %d\"}", resp.StatusCode))
+					ar.JSONResponse, _ = json.Marshal(
+						fmt.Sprintf(
+							"{\"errormessage\": \"HTTP Error Code: %d\"}", resp.StatusCode,
+						),
+					)
 				}
 			}
 			return ar, nil
 		}
 	default:
 		{
-			fmt.Fprintf(os.Stderr,
+			_, err := fmt.Fprintf(
+				os.Stderr,
 				"ambient.DeviceMac: HTTPResponseCode=%d\n"+
 					"Full Response:\n%+v",
-				resp.StatusCode, resp)
-			return ar, errors.New("Bad non-200/429/502/503 Response Code")
+				resp.StatusCode, resp,
+			)
+			if err != nil {
+				return APIDeviceMacResponse{}, err
+			}
+			return ar, errors.New("bad non-200/429/502/503 Response Code")
 		}
 	}
 	err = json.Unmarshal(ar.JSONResponse, &ar.Record)
