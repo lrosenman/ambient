@@ -22,7 +22,6 @@ const applicationKey = "21a439e927a84a25bb79ffe894fdd372b3e9d2e8bcef4167943b52cb
 // This is a DEMO KEY, replace it with your own.
 const apiKey = "78f9704baaab411a87edeed59052cbb687a4aa7764a44accbaf6447492b0ca8c"
 
-
 func main() {
 	key := ambient.NewKey(applicationKey, apiKey)
 	dr, err := ambient.Device(key)
