@@ -5,7 +5,8 @@
 
 // Package ambient provides helper functions and Go types
 // for accessing ambientweather.net's API which is documented at
-//      https://ambientweather.docs.apiary.io/
+//
+//	https://ambientweather.docs.apiary.io/
 package ambient
 
 import (
@@ -90,8 +91,8 @@ type Record struct {
 	Lightning_day      int
 	Lightning_distance float64
 	Lightning_hour     int
-	Lightning_time     int
-	Pm25               int
+	Lightning_time     time.Time
+	Pm25               float64
 	Pm25_24h           float64
 	Relay1             int
 	Relay2             int
@@ -104,26 +105,26 @@ type Record struct {
 	Relay9             int
 	Relay10            int
 	Monthlyrainin      float64
-	soiltemp1f         float64
-	soiltemp2f         float64
-	soiltemp3f         float64
-	soiltemp4f         float64
-	soiltemp5f         float64
-	soiltemp6f         float64
-	soiltemp7f         float64
-	soiltemp8f         float64
-	soiltemp9f         float64
-	soiltemp10f        float64
-	soilhum1           float64
-	soilhum2           float64
-	soilhum3           float64
-	soilhum4           float64
-	soilhum5           float64
-	soilhum6           float64
-	soilhum7           float64
-	soilhum8           float64
-	soilhum9           float64
-	soilhum10          float64
+	Soiltemp1f         float64
+	Soiltemp2f         float64
+	Soiltemp3f         float64
+	Soiltemp4f         float64
+	Soiltemp5f         float64
+	Soiltemp6f         float64
+	Soiltemp7f         float64
+	Soiltemp8f         float64
+	Soiltemp9f         float64
+	Soiltemp10f        float64
+	Soilhum1           float64
+	Soilhum2           float64
+	Soilhum3           float64
+	Soilhum4           float64
+	Soilhum5           float64
+	Soilhum6           float64
+	Soilhum7           float64
+	Soilhum8           float64
+	Soilhum9           float64
+	Soilhum10          float64
 	Solarradiation     float64
 	Tempf              float64
 	Temp1f             float64
@@ -156,6 +157,8 @@ type Record struct {
 	Windspdmph_avg10m float64
 	Yearlyrainin      float64
 	TZ                string
+	Aqi_pm25_in       int
+	Aqi_pm25_in_24h   int
 }
 
 // DeviceInfo maps the info portion of the /devices API.
@@ -164,7 +167,7 @@ type DeviceInfo struct {
 	Location string
 }
 
-//DeviceRecord maps one record of the /devices API.
+// DeviceRecord maps one record of the /devices API.
 type DeviceRecord struct {
 	Macaddress     string
 	Info           DeviceInfo

@@ -1,3 +1,3 @@
 module github.com/lrosenman/ambient
 
-go 1.18.3
+go 1.18
