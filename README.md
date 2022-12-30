@@ -4,7 +4,7 @@
 
 AmbientWeather.net API Helper
 
-Example program in https://github.com/lrosenman/ambient/tree/master/example
+Example program in https://github.com/lrosenman/ambient/tree/master/examples
 
 Official Doc:
 
