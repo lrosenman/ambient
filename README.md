@@ -6,7 +6,6 @@ AmbientWeather.net API Helper
 
 ## Example Usage
 Examples of how to use this library can be found in the [examples](/examples) directory
-Example program in https://github.com/lrosenman/ambient/tree/master/examples
 
 | Name                                                     | Purpose                                                                                                                   |
 |----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
