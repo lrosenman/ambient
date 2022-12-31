@@ -11,7 +11,7 @@ import (
 This example queries a specific device for its historical data.
 
 API Docs:
-https://ambientweather.docs.apiary.io/#reference/0/device-data/list-user's-devices
+https://ambientweather.docs.apiary.io/#reference/0/device-data/query-device-data
 
 Sample Usage:
 go run main.go -applicationKey AFEA804E-9AB8-4E4F-BBCC-276C413E8B84 -apiKey F362D94E-FB4C-434F-A9B3-D4A2694CF6A4 -macAddress 00:0E:C6:10:01:86
