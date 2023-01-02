@@ -72,5 +72,5 @@ In general, ambient follows [semver](https://semver.org/) as closely as we
 can for tagging releases of the package.
 
 ## License
-This library is distributed under the BSD-style license found in the [LICENSE](./LICENSE)
+This library is distributed under the BSD-style license found in the [`LICENSE.md`](LICENSE.md)
 file.
