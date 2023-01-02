@@ -3,8 +3,6 @@
 // Copyright 2018 Larry Rosenman, LERCTR Consulting, larryrtx@gmail.com
 //
 
-// Example Program for the ambient package.
-// printAPI shows all API calls and the responses to them
 package main
 
 import (
@@ -15,6 +13,19 @@ import (
 	"os"
 	"time"
 )
+
+/*
+This example queries all devices (weather stations) that are registered for the account the application and api keys are associated with and shows them in the console.
+To generate an application and api key for your own account, do so at https://ambientweather.net/account in the API Keys section.
+
+API Docs:
+https://ambientweather.docs.apiary.io/#reference/0/devices/list-user's-devices
+https://ambientweather.docs.apiary.io/#reference/0/device-data/query-device-data
+https://ambientweather.docs.apiary.io/#introduction/rate-limiting
+
+Sample Usage:
+go run main.go
+*/
 
 // This is a DEMO KEY, replace it with your own.
 //

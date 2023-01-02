@@ -4,13 +4,21 @@
 
 AmbientWeather.net API Helper
 
-Example program in https://github.com/lrosenman/ambient/tree/master/example
+## Example Usage
+Examples of how to use this library can be found in the [examples](/examples) directory
 
-Official Doc:
+| Name                                                     | Purpose                                                                                                                   |
+|----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| [list-devices](/examples/list-devices/main.go)           | Lists all devices (weather stations) that are registered for the account the application and api keys are associated with |
+| [query-device](/examples/query-device/main.go)           | Queries a specific device for its observations                                                                            |
+| [query-all-devices](/examples/query-all-devices/main.go) | Queries all registered devices for an account for their observations                                                      |
+| [print-api](/examples/print-api/main.go)                 | Shows all API calls and the responses to them                                                                             |
+
+## Official Doc:
 
 https://ambientweather.docs.apiary.io/
 
-Pull Requests, bug reports, code improvements, etc. very much welcome.
+### Pull Requests, bug reports, code improvements, etc. very much welcome.
 
 
 ```
