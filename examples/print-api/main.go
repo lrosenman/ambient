@@ -9,7 +9,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/lrosenman/ambient"
+	"github.com/lrosenman/ambient/pkg/ambient"
 	"os"
 	"time"
 )

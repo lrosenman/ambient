@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/lrosenman/ambient"
+	"github.com/lrosenman/ambient/pkg/ambient"
 	"log"
 	"time"
 )
