@@ -26,6 +26,8 @@ const APIVer = "v1"
 // APIEP is the endpoint to be called.
 const APIEP = "https://api.ambientweather.net/" + APIVer
 
+var httpGet = http.Get
+
 // Record maps the data for a specific time
 // as returned by the API.
 //
@@ -208,22 +210,22 @@ func NewKey(applicationKey string, apiKey string) Key {
 }
 
 // APIKey returns the currently set APIKey.
-func (Key Key) APIKey() string {
+func (Key *Key) APIKey() string {
 	return Key.apiKey
 }
 
 // ApplicationKey returns the currently set ApplicationKey.
-func (Key Key) ApplicationKey() string {
+func (Key *Key) ApplicationKey() string {
 	return Key.applicationKey
 }
 
 // SetApplicationKey sets the applicationKey
-func (Key Key) SetApplicationKey(applicationKey string) {
+func (Key *Key) SetApplicationKey(applicationKey string) {
 	Key.applicationKey = applicationKey
 }
 
 // SetAPIKey sets the APIKey
-func (Key Key) SetAPIKey(apiKey string) {
+func (Key *Key) SetAPIKey(apiKey string) {
 	Key.apiKey = apiKey
 }
 
@@ -234,7 +236,7 @@ func Device(key Key) (APIDeviceResponse, error) {
 	apiurl := APIEP + "/devices?applicationKey=" + key.applicationKey +
 		"&apiKey=" + key.apiKey
 	startTime := time.Now()
-	resp, err := http.Get(apiurl)
+	resp, err := httpGet(apiurl)
 	ar.ResponseTime = time.Since(startTime)
 	if err != nil {
 		return ar, err
@@ -308,7 +310,7 @@ func DeviceMac(key Key, macaddr string, endtime time.Time, limit int64) (APIDevi
 		"&limit=" + fmt.Sprintf("%d", limit) + "&applicationKey=" + key.applicationKey +
 		"&apiKey=" + key.apiKey
 	startTime := time.Now()
-	resp, err := http.Get(apiurl)
+	resp, err := httpGet(apiurl)
 	ar.ResponseTime = time.Since(startTime)
 	if err != nil {
 		return ar, err
