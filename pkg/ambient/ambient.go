@@ -165,8 +165,25 @@ type Record struct {
 
 // DeviceInfo maps the info portion of the /devices API.
 type DeviceInfo struct {
-	Name     string
-	Location string
+	Name         string
+	Location     string
+	LocationInfo LocationInfo `json:"coords"`
+}
+
+type Coords struct {
+	Lon float64 `json:"lon"`
+	Lat float64 `json:"lat"`
+}
+type Geo struct {
+	Type        string    `json:"type"`
+	Coordinates []float64 `json:"coordinates"`
+}
+type LocationInfo struct {
+	Coords    Coords  `json:"coords"`
+	Address   string  `json:"address"`
+	Location  string  `json:"location"`
+	Elevation float64 `json:"elevation"`
+	Geo       Geo     `json:"geo"`
 }
 
 // DeviceRecord maps one record of the /devices API.

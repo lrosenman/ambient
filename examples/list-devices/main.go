@@ -33,6 +33,6 @@ func main() {
 
 	log.Printf("%v devices found", len(devices.DeviceRecord))
 	for _, item := range devices.DeviceRecord {
-		log.Printf("Mac:%s Name:%s Location: %s", item.Macaddress, item.Info.Name, item.Info.Location)
+		log.Printf("Mac: %s Name: %s Location: %s Address: %s Elevation: %v", item.Macaddress, item.Info.Name, item.Info.LocationInfo.Location, item.Info.LocationInfo.Address, item.Info.LocationInfo.Elevation)
 	}
 }
