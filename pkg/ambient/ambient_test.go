@@ -2,20 +2,25 @@ package ambient
 
 import (
 	"encoding/json"
-	"github.com/go-faker/faker/v4"
-	"github.com/stretchr/testify/require"
 	"io"
 	"net/http"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/go-faker/faker/v4"
+	"github.com/stretchr/testify/require"
 )
 
 func getValidDeviceRecord() *DeviceRecord {
 	result := &DeviceRecord{
 		Macaddress: faker.MacAddress(),
-		Info:       DeviceInfo{},
-		LastData:   Record{},
+		Info: DeviceInfo{
+			LocationInfo: LocationInfo{
+				Coords: Coords{},
+			},
+		},
+		LastData: Record{},
 		LastDataFields: map[string]interface{}{
 			"one": float64(1),
 			"two": "two",
@@ -94,6 +99,13 @@ func requireDeviceRecordEqualValues(t *testing.T, actualRecord DeviceRecord, exp
 	require.Equal(t, expectedRecord.Macaddress, actualRecord.Macaddress)
 	require.Equal(t, expectedRecord.Info.Name, actualRecord.Info.Name)
 	require.Equal(t, expectedRecord.Info.Location, actualRecord.Info.Location)
+
+	require.Equal(t, expectedRecord.Info.LocationInfo.Location, actualRecord.Info.LocationInfo.Location)
+	require.Equal(t, expectedRecord.Info.LocationInfo.Address, actualRecord.Info.LocationInfo.Address)
+	require.Equal(t, expectedRecord.Info.LocationInfo.Elevation, actualRecord.Info.LocationInfo.Elevation)
+	require.Equal(t, expectedRecord.Info.LocationInfo.Coords.Lon, actualRecord.Info.LocationInfo.Coords.Lon)
+	require.Equal(t, expectedRecord.Info.LocationInfo.Coords.Lat, actualRecord.Info.LocationInfo.Coords.Lat)
+
 	require.EqualValues(t, expectedRecord.LastDataFields, actualRecord.LastDataFields)
 	requireRecordEqualValues(t, expectedRecord.LastData, actualRecord.LastData)
 }
